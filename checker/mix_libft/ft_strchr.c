@@ -1,30 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   checker.h                                          :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: artmende <artmende@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/12 10:47:26 by artmende          #+#    #+#             */
-/*   Updated: 2021/09/14 16:54:08 by artmende         ###   ########.fr       */
+/*   Created: 2021/09/14 15:38:30 by artmende          #+#    #+#             */
+/*   Updated: 2021/09/14 15:38:50 by artmende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CHECKER_H
-# define CHECKER_H
+#include "../checker.h"
 
-#include <unistd.h>
-#include <stdlib.h>
-#include "get_next_line/get_next_line.h"
-
-char	**ft_split(char const *s, char c);
-int		ft_atoi(const char *str);
-char	*ft_strchr(const char *s, int c);
-
-typedef struct s_number_list
+char	*ft_strchr(const char *s, int c)
 {
-	int						nbr;
-	struct s_number_list	*next;
-}				t_number_list;
+	int		i;
+	char	c_e;
+	char	*s_e;
 
-#endif
+	c_e = (char)c;
+	s_e = (char *)s;
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == c_e)
+			return (&s_e[i]);
+		i++;
+	}
+	if (c == 0)
+		return (&s_e[i]);
+	return (0);
+}
