@@ -6,7 +6,7 @@
 /*   By: artmende <artmende@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 10:43:35 by artmende          #+#    #+#             */
-/*   Updated: 2021/09/15 15:38:30 by artmende         ###   ########.fr       */
+/*   Updated: 2021/09/15 18:01:15 by artmende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,39 @@ void	ft_lstadd_back(t_nbr_list **alst, t_nbr_list *new)
 	s->next = new;
 }
 
+void	free_linked_list(t_nbr_list **alst)
+{
+	t_nbr_list	*temp1;
+	t_nbr_list	*temp2;
 
+	temp1 = 0;
+	if (alst)
+		temp1 = *alst;
+	while (temp1)
+	{
+		temp2 = temp1->next;
+		free(temp1);
+		temp1 = temp2;
+	}
+	if (alst)
+		*alst = 0;
+}
+
+int	call_exit(t_nbr_list **stack_a, t_nbr_list **stack_b, char *line)
+{
+	// free stack a
+	// free stack b
+	// free line
+	// display error
+	// exit
+
+	free_linked_list(stack_a);
+	free_linked_list(stack_b);
+	free(line);
+	write(2, "Error\n", 7);
+	exit(EXIT_FAILURE);
+	return (0);
+}
 
 
 

@@ -6,7 +6,7 @@
 /*   By: artmende <artmende@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 15:00:27 by artmende          #+#    #+#             */
-/*   Updated: 2021/09/15 14:32:45 by artmende         ###   ########.fr       */
+/*   Updated: 2021/09/15 17:15:52 by artmende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@
 	ft_atoi has been modified a little bit to look for int overflows.
 */
 
-int	ft_atoi(const char *str)
+int	ft_atoi(const char *str, t_nbr_list **nbr_list)
 {
+	(void)nbr_list;
 	long int	result_l;
 	int			minus;
 	int			i;
@@ -40,6 +41,6 @@ int	ft_atoi(const char *str)
 	if (i > 10 || (i == 10 && *str > '2')
 		|| (minus == 1 && result_l > 2147483647)
 		|| (minus == -1 && result_l > 2147483648))
-		write(1, "Error, out of range !\n", 23);
+		call_exit(nbr_list, 0, 0);
 	return ((int)(minus * result_l));
 }
