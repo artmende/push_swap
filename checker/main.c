@@ -6,7 +6,7 @@
 /*   By: artmende <artmende@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 10:43:35 by artmende          #+#    #+#             */
-/*   Updated: 2021/09/14 17:23:02 by artmende         ###   ########.fr       */
+/*   Updated: 2021/09/15 11:44:27 by artmende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,34 @@ void	create_nbr_list_from_args(int argc, char **argv, t_number_list **number_lis
 	}
 }
 
-void	verify_parameters(int argc, char **argv, t_number_list **number_list)
+void	verify_input_str(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (*str)
+	{
+		if (ft_strchr("0123456789", *str))
+		{
+			while (*(str + i) && ft_strchr("0123456789", *(str + i)))
+				i++;
+			printf("Inside the loop : %d\n", ft_atoi(str));
+			if (i > 10 || (i == 10 && *str > '2') || (*(str - 1) == '-'
+				&& ft_atoi(str - 1) > 0) || (*(str - 1) != '-'
+				&& ft_atoi(str) < 0))
+			{
+				write(1, "Error, nbr out of range\n", 25);
+				exit(0);
+			}
+			str = str + i;
+			i = 0;
+		}
+		else
+			str++;
+	}
+}
+
+void	store_numbers(int argc, char **argv, t_number_list **number_list)
 {
 	if (argc == 1)
 	{
@@ -95,6 +122,7 @@ void	verify_parameters(int argc, char **argv, t_number_list **number_list)
 	{
 		printf("%s\n", "argc = 2");
 		printf("things to save : %s\n", argv[1]);
+		verify_input_str(argv[1]);
 		create_nbr_list_from_str(argv[1], number_list);
 	}
 	else
@@ -118,7 +146,7 @@ int	main(int argc, char **argv)
 	// 4) verify that the linked list is now sorted, display OK if yes
 
 //	write(1, "coucou\n", 7);
-	printf("argc is : %d\n", argc);
+//	printf("argc is : %d\n", argc);
 	(void)argv;
 	(void)argc;
 
@@ -127,7 +155,7 @@ int	main(int argc, char **argv)
 
 	t_number_list	*number_list;
 	number_list = 0;
-	verify_parameters(argc, argv, &number_list);
+	store_numbers(argc, argv, &number_list);
 
 while(number_list)
 {
