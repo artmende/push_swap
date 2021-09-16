@@ -6,7 +6,7 @@
 /*   By: artmende <artmende@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 10:43:35 by artmende          #+#    #+#             */
-/*   Updated: 2021/09/16 11:00:45 by artmende         ###   ########.fr       */
+/*   Updated: 2021/09/16 17:49:15 by artmende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,55 @@ int	call_exit(t_nbr_list **stack_a, t_nbr_list **stack_b, char *line)
 }
 
 
+int	run_action(t_malloc_stuff *data)
+{
+	int	len;
 
+	len = ft_len_nl(data->line, 0);
+	if (!len && data->empty_line < 2)
+	{
+		data->empty_line++;
+		return (0);
+	}
+	printf("About to evaluate data_empty_line. The value is : %d\n", data->empty_line);
+	if (data->empty_line > 1)
+		call_exit(&data->stacks.a, &data->stacks.b, data->line);
+	else if (len == 2)
+	{
+		if (ft_strnstr("sa", data->line, 2))
+			return (sa(data));
+		else if (ft_strnstr("sb", data->line, 2))
+			return (sb(data));
+		else if (ft_strnstr("ss", data->line, 2))
+			return (ss(data));
+		else if (ft_strnstr("pa", data->line, 2))
+			return (pa(data));
+		else if (ft_strnstr("pb", data->line, 2))
+			return (pb(data));
+		else if (ft_strnstr("ra", data->line, 2))
+			return (ra(data));
+		else if (ft_strnstr("rb", data->line, 2))
+			return (rb(data));
+		else if (ft_strnstr("rr", data->line, 2))
+			return (rr(data));
+		else
+			call_exit(&data->stacks.a, &data->stacks.b, data->line);
+	}
+	else if (len == 3)
+	{
+		if (ft_strnstr("rra", data->line, 3))
+			return (rra(data));
+		else if (ft_strnstr("rrb", data->line, 3))
+			return (rrb(data));
+		else if (ft_strnstr("rrr", data->line, 3))
+			return (rrr(data));
+		else
+			call_exit(&data->stacks.a, &data->stacks.b, data->line);
+	}
+	else
+		call_exit(&data->stacks.a, &data->stacks.b, data->line);
+	return (0);
+}
 
 
 
@@ -88,29 +136,46 @@ int	main(int argc, char **argv)
 	(void)argc;
 
 //	char	*line = 0;
-//	int	gnl_return = 0;
+	int	gnl_return;
 
 	t_malloc_stuff	stacks_line;
 	ft_memset(&stacks_line, 0, sizeof(stacks_line));
 
 	store_numbers(argc, argv, &stacks_line.stacks.a);
 
-write(1, "\nStack A before any instruction\n\n", 33);
+	t_nbr_list	*list_ptr;
+	list_ptr = stacks_line.stacks.a;
+	
+write(1, "\nStack A before any instruction\n\n", 34);
+while(list_ptr)
+{
+	printf("%d\n", list_ptr->nbr);
+	list_ptr = list_ptr->next;
+}
+	write(1, "\n", 1);
+	gnl_return = 1;
+
+	while (gnl_return)
+	{
+		gnl_return = get_next_line(0, &stacks_line.line);
+		if (gnl_return == -1)
+			call_exit(&stacks_line.stacks.a, &stacks_line.stacks.b, 0);
+		run_action(&stacks_line);
+		free(stacks_line.line);
+		// check if gnl_return is not -1
+		// check if incorrect instruction
+		// execute instruction
+		// free line
+	}
+
+write(1, "\nStack A after following instructions\n\n", 40);
 while(stacks_line.stacks.a)
 {
 	printf("%d\n", stacks_line.stacks.a->nbr);
 	stacks_line.stacks.a = stacks_line.stacks.a->next;
 }
 
-
-/* 	while(1)
-	{
-		gnl_return = get_next_line(0, &line);
-		printf("gnl_return is : %d\n", gnl_return);
-		printf("%s\n", line);
-		if (!gnl_return)
-			break ;
-	} */
+printf("data_empty_line is : %d\n", stacks_line.empty_line);
 
 	return (0);
 }
