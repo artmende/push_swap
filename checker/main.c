@@ -6,7 +6,7 @@
 /*   By: artmende <artmende@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 10:43:35 by artmende          #+#    #+#             */
-/*   Updated: 2021/09/15 18:01:15 by artmende         ###   ########.fr       */
+/*   Updated: 2021/09/16 11:00:45 by artmende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,19 +90,16 @@ int	main(int argc, char **argv)
 //	char	*line = 0;
 //	int	gnl_return = 0;
 
-	t_stacks_a_b	stacks;
+	t_malloc_stuff	stacks_line;
+	ft_memset(&stacks_line, 0, sizeof(stacks_line));
 
-	ft_memset(&stacks, 0, sizeof(stacks));
-//	t_nbr_list	*nbr_list;
-//	nbr_list = 0;
-	store_numbers(argc, argv, &stacks.a);
+	store_numbers(argc, argv, &stacks_line.stacks.a);
 
-
-
-while(stacks.a)
+write(1, "\nStack A before any instruction\n\n", 33);
+while(stacks_line.stacks.a)
 {
-	printf("%d\n", stacks.a->nbr);
-	stacks.a = stacks.a->next;
+	printf("%d\n", stacks_line.stacks.a->nbr);
+	stacks_line.stacks.a = stacks_line.stacks.a->next;
 }
 
 
