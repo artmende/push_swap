@@ -6,7 +6,7 @@
 /*   By: artmende <artmende@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 10:47:26 by artmende          #+#    #+#             */
-/*   Updated: 2021/09/16 17:42:31 by artmende         ###   ########.fr       */
+/*   Updated: 2021/09/17 10:28:49 by artmende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ typedef struct s_malloc_stuff
 {
 	struct s_stacks_a_b	stacks;
 	char				*line;
-	int					empty_line;
 }				t_malloc_stuff;
 
 void	store_numbers(int argc, char **argv, t_nbr_list **nbr_list);

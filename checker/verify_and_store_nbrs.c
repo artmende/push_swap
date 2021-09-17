@@ -6,7 +6,7 @@
 /*   By: artmende <artmende@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 14:39:41 by artmende          #+#    #+#             */
-/*   Updated: 2021/09/15 18:16:09 by artmende         ###   ########.fr       */
+/*   Updated: 2021/09/17 10:32:22 by artmende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	store_numbers(int argc, char **argv, t_nbr_list **nbr_list)
 {
 	if (argc == 1)
-		return ;
+		call_exit(0, 0, 0);
 	else if (argc == 2)
 		create_nbr_list_from_str(argv[1], nbr_list);
 	else

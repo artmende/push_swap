@@ -6,7 +6,7 @@
 /*   By: artmende <artmende@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 10:43:35 by artmende          #+#    #+#             */
-/*   Updated: 2021/09/16 17:49:15 by artmende         ###   ########.fr       */
+/*   Updated: 2021/09/17 18:20:26 by artmende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,15 +70,7 @@ int	run_action(t_malloc_stuff *data)
 	int	len;
 
 	len = ft_len_nl(data->line, 0);
-	if (!len && data->empty_line < 2)
-	{
-		data->empty_line++;
-		return (0);
-	}
-	printf("About to evaluate data_empty_line. The value is : %d\n", data->empty_line);
-	if (data->empty_line > 1)
-		call_exit(&data->stacks.a, &data->stacks.b, data->line);
-	else if (len == 2)
+	if (len == 2)
 	{
 		if (ft_strnstr("sa", data->line, 2))
 			return (sa(data));
@@ -115,7 +107,30 @@ int	run_action(t_malloc_stuff *data)
 	return (0);
 }
 
+void	reading_instructions_loop(t_malloc_stuff *data)
+{
+	int	gnl_return;
 
+	gnl_return = 1;
+	while (gnl_return)
+	{
+		gnl_return = get_next_line(0, &data->line);
+		if (gnl_return == -1)
+			call_exit(&data->stacks.a, &data->stacks.b, 0);
+		if	(gnl_return == 0 && ft_len_nl(data->line, 0))
+			call_exit(&data->stacks.a, &data->stacks.b, data->line);
+		if (gnl_return == 0 && !ft_len_nl(data->line, 0))
+		{
+			free(data->line);
+			break ;
+		}
+		
+		
+		
+		run_action(data);
+		free(data->line);
+	}
+}
 
 
 
@@ -130,13 +145,11 @@ int	main(int argc, char **argv)
 		// code function for each type of instruction
 	// 4) verify that the linked list is now sorted, display OK if yes
 
-//	write(1, "coucou\n", 7);
-//	printf("argc is : %d\n", argc);
 	(void)argv;
 	(void)argc;
 
 //	char	*line = 0;
-	int	gnl_return;
+//	int	gnl_return;
 
 	t_malloc_stuff	stacks_line;
 	ft_memset(&stacks_line, 0, sizeof(stacks_line));
@@ -153,21 +166,33 @@ while(list_ptr)
 	list_ptr = list_ptr->next;
 }
 	write(1, "\n", 1);
+
+	reading_instructions_loop(&stacks_line);
+
+	/* 
 	gnl_return = 1;
 
 	while (gnl_return)
 	{
 		gnl_return = get_next_line(0, &stacks_line.line);
+//		printf("gnl_return is : %d and ", gnl_return);
+//		printf("line value is : %s\n", stacks_line.line);
 		if (gnl_return == -1)
 			call_exit(&stacks_line.stacks.a, &stacks_line.stacks.b, 0);
+		if	(gnl_return == 0 && ft_len_nl(stacks_line.line, 0))
+			call_exit(&stacks_line.stacks.a, &stacks_line.stacks.b, stacks_line.line);
+		if (gnl_return == 0 && !ft_len_nl(stacks_line.line, 0))
+		{
+			free(stacks_line.line);
+			break ;
+		}
+		
+		
+		
 		run_action(&stacks_line);
 		free(stacks_line.line);
-		// check if gnl_return is not -1
-		// check if incorrect instruction
-		// execute instruction
-		// free line
 	}
-
+ */
 write(1, "\nStack A after following instructions\n\n", 40);
 while(stacks_line.stacks.a)
 {
@@ -175,7 +200,6 @@ while(stacks_line.stacks.a)
 	stacks_line.stacks.a = stacks_line.stacks.a->next;
 }
 
-printf("data_empty_line is : %d\n", stacks_line.empty_line);
 
 	return (0);
 }
