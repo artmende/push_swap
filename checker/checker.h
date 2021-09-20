@@ -6,7 +6,7 @@
 /*   By: artmende <artmende@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 10:47:26 by artmende          #+#    #+#             */
-/*   Updated: 2021/09/20 16:23:51 by artmende         ###   ########.fr       */
+/*   Updated: 2021/09/20 16:57:45 by artmende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ typedef struct s_malloc_stuff
 	char				*line;
 }				t_malloc_stuff;
 
-void	store_numbers(int argc, char **argv, t_nbr_list **nbr_list);
-void	create_nbr_list_from_args(int argc, char **argv, t_nbr_list **nbr_list);
-void	create_nbr_list_from_str(char *str, t_nbr_list **nbr_list);
+void	store_numbers(int argc, char **argv, t_malloc_stuff *data);
+void	create_nbr_list_from_args(int argc, char **argv, t_malloc_stuff *data);
+void	create_nbr_list_from_str(char *str, t_malloc_stuff *data);
 
 int	sa(t_malloc_stuff *data);
 int	sb(t_malloc_stuff *data);

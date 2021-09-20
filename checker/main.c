@@ -6,7 +6,7 @@
 /*   By: artmende <artmende@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 10:43:35 by artmende          #+#    #+#             */
-/*   Updated: 2021/09/20 16:21:45 by artmende         ###   ########.fr       */
+/*   Updated: 2021/09/20 17:58:41 by artmende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,11 +130,30 @@ void	reading_instructions_loop(t_malloc_stuff *data)
 		run_action(data);
 		free(data->line);
 	}
+	data->line = 0;
 }
 
 void	verify_stack_a_is_sorted(t_malloc_stuff *data)
 {
-	(void)data;
+	t_nbr_list	*list_ptr;
+
+	list_ptr = data->stacks.a;
+	while(data->stacks.a && list_ptr->next)
+	{
+		if (list_ptr->nbr > list_ptr->next->nbr)
+		{
+			write(1, "KO\n", 4);
+			break ;
+		}
+		data->stacks.nbr_of_element--;
+		list_ptr = list_ptr->next;
+	}
+	if (!data->stacks.a || data->stacks.nbr_of_element != 1)
+		write(1, "KO\n", 4);
+	else
+		write(1, "OK\n", 4);
+	free_linked_list(&data->stacks.a);
+	free_linked_list(&data->stacks.b);
 }
 
 
@@ -158,7 +177,9 @@ int	main(int argc, char **argv)
 	ft_memset(&stacks_line, 0, sizeof(stacks_line));
 
 
-	store_numbers(argc, argv, &stacks_line.stacks.a);
+	store_numbers(argc, argv, &stacks_line);
+
+	printf("There are %d elements !\n", stacks_line.stacks.nbr_of_element);
 
 	t_nbr_list	*list_ptr;
 	list_ptr = stacks_line.stacks.a;
@@ -205,6 +226,7 @@ int	main(int argc, char **argv)
 		list_ptr = list_ptr->next;
 	}
 	
+	verify_stack_a_is_sorted(&stacks_line);
 
 	return (0);
 }
