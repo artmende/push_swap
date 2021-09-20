@@ -6,7 +6,7 @@
 /*   By: artmende <artmende@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 10:47:26 by artmende          #+#    #+#             */
-/*   Updated: 2021/09/17 10:28:49 by artmende         ###   ########.fr       */
+/*   Updated: 2021/09/20 16:23:51 by artmende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,15 @@
 
 typedef struct s_nbr_list
 {
-	int						nbr;
+	int					nbr;
 	struct s_nbr_list	*next;
 }				t_nbr_list;
 
 typedef struct s_stacks_a_b
 {
-	struct s_nbr_list	*a;
-	struct s_nbr_list	*b;
+	int		nbr_of_element;
+	struct	s_nbr_list	*a;
+	struct	s_nbr_list	*b;
 }				t_stacks_a_b;
 
 typedef struct s_malloc_stuff

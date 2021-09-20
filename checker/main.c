@@ -6,7 +6,7 @@
 /*   By: artmende <artmende@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 10:43:35 by artmende          #+#    #+#             */
-/*   Updated: 2021/09/17 18:20:26 by artmende         ###   ########.fr       */
+/*   Updated: 2021/09/20 16:21:45 by artmende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,10 @@ void	reading_instructions_loop(t_malloc_stuff *data)
 	}
 }
 
-
+void	verify_stack_a_is_sorted(t_malloc_stuff *data)
+{
+	(void)data;
+}
 
 
 int	main(int argc, char **argv)
@@ -154,17 +157,18 @@ int	main(int argc, char **argv)
 	t_malloc_stuff	stacks_line;
 	ft_memset(&stacks_line, 0, sizeof(stacks_line));
 
+
 	store_numbers(argc, argv, &stacks_line.stacks.a);
 
 	t_nbr_list	*list_ptr;
 	list_ptr = stacks_line.stacks.a;
 	
-write(1, "\nStack A before any instruction\n\n", 34);
-while(list_ptr)
-{
-	printf("%d\n", list_ptr->nbr);
-	list_ptr = list_ptr->next;
-}
+	write(1, "\nStack A before any instruction\n\n", 34);
+	while(list_ptr)
+	{
+		printf("%d\n", list_ptr->nbr);
+		list_ptr = list_ptr->next;
+	}
 	write(1, "\n", 1);
 
 	reading_instructions_loop(&stacks_line);
@@ -193,13 +197,14 @@ while(list_ptr)
 		free(stacks_line.line);
 	}
  */
-write(1, "\nStack A after following instructions\n\n", 40);
-while(stacks_line.stacks.a)
-{
-	printf("%d\n", stacks_line.stacks.a->nbr);
-	stacks_line.stacks.a = stacks_line.stacks.a->next;
-}
-
+	write(1, "\nStack A after following instructions\n\n", 40);
+	list_ptr = stacks_line.stacks.a;
+	while(list_ptr)
+	{
+		printf("%d\n", list_ptr->nbr);
+		list_ptr = list_ptr->next;
+	}
+	
 
 	return (0);
 }
