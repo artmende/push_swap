@@ -6,7 +6,7 @@
 /*   By: artmende <artmende@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 10:43:35 by artmende          #+#    #+#             */
-/*   Updated: 2021/09/20 17:58:41 by artmende         ###   ########.fr       */
+/*   Updated: 2021/09/21 12:03:34 by artmende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,10 +141,7 @@ void	verify_stack_a_is_sorted(t_malloc_stuff *data)
 	while(data->stacks.a && list_ptr->next)
 	{
 		if (list_ptr->nbr > list_ptr->next->nbr)
-		{
-			write(1, "KO\n", 4);
 			break ;
-		}
 		data->stacks.nbr_of_element--;
 		list_ptr = list_ptr->next;
 	}
@@ -156,27 +153,36 @@ void	verify_stack_a_is_sorted(t_malloc_stuff *data)
 	free_linked_list(&data->stacks.b);
 }
 
+/*
+**	The checker works that way :
+**
+**	Stacks A and B are each a linked list, with the top of the stack being the
+**	first element of the list.
+**	We first store all numbers in stack A.
+**	While doing so, we verify that there are no errors, like out of range
+**	numbers, or duplicates, or wrong character in the input string / args.
+**
+**	Depending on how the checker is called, the input might be received as a
+**	string with all numbers separated by spaces, or each number might be a
+**	separate argument of main.
+**
+**	After all numbers are stored in stack A, the instructions are read 1 line at
+**	a time using get_next_line.
+**	For each line read, we verify that the instruction is correct, and we
+**	execute the associated action.
+**
+**	After all instruction have been read, we verify that the stack A is now
+**	sorted and complete.
+**
+**	For convenience in avoiding memory leaks, all heap pointers are kept in a
+**	single structure.
+*/
 
 int	main(int argc, char **argv)
 {
-	// verify input for errors
-	
-	// 1) store all numbers in the linked list
-	// 2) store all instruction in a array (read 0)
-	// 3) apply each instruction to the linked list
-		// code function for each type of instruction
-	// 4) verify that the linked list is now sorted, display OK if yes
-
-	(void)argv;
-	(void)argc;
-
-//	char	*line = 0;
-//	int	gnl_return;
-
 	t_malloc_stuff	stacks_line;
+
 	ft_memset(&stacks_line, 0, sizeof(stacks_line));
-
-
 	store_numbers(argc, argv, &stacks_line);
 
 	printf("There are %d elements !\n", stacks_line.stacks.nbr_of_element);
@@ -194,30 +200,7 @@ int	main(int argc, char **argv)
 
 	reading_instructions_loop(&stacks_line);
 
-	/* 
-	gnl_return = 1;
 
-	while (gnl_return)
-	{
-		gnl_return = get_next_line(0, &stacks_line.line);
-//		printf("gnl_return is : %d and ", gnl_return);
-//		printf("line value is : %s\n", stacks_line.line);
-		if (gnl_return == -1)
-			call_exit(&stacks_line.stacks.a, &stacks_line.stacks.b, 0);
-		if	(gnl_return == 0 && ft_len_nl(stacks_line.line, 0))
-			call_exit(&stacks_line.stacks.a, &stacks_line.stacks.b, stacks_line.line);
-		if (gnl_return == 0 && !ft_len_nl(stacks_line.line, 0))
-		{
-			free(stacks_line.line);
-			break ;
-		}
-		
-		
-		
-		run_action(&stacks_line);
-		free(stacks_line.line);
-	}
- */
 	write(1, "\nStack A after following instructions\n\n", 40);
 	list_ptr = stacks_line.stacks.a;
 	while(list_ptr)
