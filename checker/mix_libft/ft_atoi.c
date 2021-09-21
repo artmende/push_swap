@@ -6,7 +6,7 @@
 /*   By: artmende <artmende@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 15:00:27 by artmende          #+#    #+#             */
-/*   Updated: 2021/09/15 17:15:52 by artmende         ###   ########.fr       */
+/*   Updated: 2021/09/21 15:32:46 by artmende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 
 int	ft_atoi(const char *str, t_nbr_list **nbr_list)
 {
-	(void)nbr_list;
 	long int	result_l;
 	int			minus;
 	int			i;
