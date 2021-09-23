@@ -6,7 +6,7 @@
 /*   By: artmende <artmende@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 11:57:58 by artmende          #+#    #+#             */
-/*   Updated: 2021/09/23 11:48:59 by artmende         ###   ########.fr       */
+/*   Updated: 2021/09/23 18:33:17 by artmende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,14 @@ typedef struct s_stacks_a_b
 	char				*line;
 }				t_malloc_stuff; */
 
+typedef struct s_easier_nbr_to_send
+{
+	int			nbr;
+	int			index;
+	char		u_d;
+	int			list_size;
+}				t_easier_nbr_to_send;
+
 
 int	call_exit(t_nbr_list **stack_a, t_nbr_list **stack_b, char *line);
 
@@ -68,6 +76,7 @@ void	check_number_from_args(char *str, t_nbr_list **nbr_list);
 
 void	ft_lstadd_back(t_nbr_list **alst, t_nbr_list *new);
 void	free_linked_list(t_nbr_list **alst);
+int		ft_lstsize(t_nbr_list *lst);
 
 /*
 **	actions_ra_rb_rr.c

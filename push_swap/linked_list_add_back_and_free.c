@@ -6,7 +6,7 @@
 /*   By: artmende <artmende@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 14:03:01 by artmende          #+#    #+#             */
-/*   Updated: 2021/09/23 11:52:51 by artmende         ###   ########.fr       */
+/*   Updated: 2021/09/23 18:25:20 by artmende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,17 @@ void	free_linked_list(t_nbr_list **alst)
 	}
 	if (alst)
 		*alst = 0;
+}
+
+int	ft_lstsize(t_nbr_list *lst)
+{
+	int	i;
+
+	i = 0;
+	while (lst)
+	{
+		lst = lst->next;
+		i++;
+	}
+	return (i);
 }
