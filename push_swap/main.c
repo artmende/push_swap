@@ -6,7 +6,7 @@
 /*   By: artmende <artmende@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 11:57:26 by artmende          #+#    #+#             */
-/*   Updated: 2021/09/22 17:48:42 by artmende         ###   ########.fr       */
+/*   Updated: 2021/09/23 13:09:11 by artmende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,9 @@ int	find_mid_value(t_stacks_a_b *stacks)
 void	send_bigger_half_to_b(t_stacks_a_b *stacks)
 {
 	(void)stacks;
+	// regarder le premier et le dernier, si aucun des 2 ne correspond, regarder un rang plus vers le milieu
+	// si un des 2 correspond, l'envoyer vers le haut par le chemin le plus court
+	// si les 2 correspondent, envoyer celui qui est le plus en haut
 }
 
 int	main(int argc, char **argv)
@@ -62,6 +65,62 @@ int	main(int argc, char **argv)
 	// send back b to a in order
 	// reverse and send to b smaller half
 	// send back b to a in order
+
+
+	t_nbr_list	*ptr1;
+	t_nbr_list	*ptr2;
+
+	ptr1 = stacks.a;
+
+	write(1, "\nPrinting stack a from the top :\n", 34);
+	while (ptr1)
+	{
+		printf("%d\n", ptr1->nbr);
+		
+		if (!ptr1->next)
+			ptr2 = ptr1;
+		ptr1 = ptr1->next;
+	}
+	write(1, "\nPrinting stack a from the bottom :\n", 37);
+	while (ptr2)
+	{
+		printf("%d\n", ptr2->nbr);
+		ptr2 = ptr2->previous;
+	}
+
+	printf("\n\npush B 3 times, then swap b, then push a 5 times\n\n");
+
+	pb(&stacks);
+	pb(&stacks);
+	pb(&stacks);
+	sb(&stacks);
+	pa(&stacks);
+	pa(&stacks);
+	pa(&stacks);
+	pa(&stacks);
+	pa(&stacks);
+
+
+
+	ptr1 = stacks.a;
+
+	write(1, "\nPrinting stack a from the top :\n", 34);
+	while (ptr1)
+	{
+		printf("%d\n", ptr1->nbr);
+		
+		if (!ptr1->next)
+			ptr2 = ptr1;
+		ptr1 = ptr1->next;
+	}
+	write(1, "\nPrinting stack a from the bottom :\n", 37);
+	while (ptr2)
+	{
+		printf("%d\n", ptr2->nbr);
+		ptr2 = ptr2->previous;
+	}
+
+
 
 	return (0);
 }

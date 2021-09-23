@@ -6,7 +6,7 @@
 /*   By: artmende <artmende@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 14:03:01 by artmende          #+#    #+#             */
-/*   Updated: 2021/09/22 14:33:04 by artmende         ###   ########.fr       */
+/*   Updated: 2021/09/23 11:52:51 by artmende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,13 @@ void	ft_lstadd_back(t_nbr_list **alst, t_nbr_list *new)
 	if (!s)
 	{
 		*alst = new;
+		new->previous = 0;
 		return ;
 	}
 	while (s->next)
 		s = s->next;
 	s->next = new;
+	new->previous = s;
 }
 
 void	free_linked_list(t_nbr_list **alst)

@@ -6,7 +6,7 @@
 /*   By: artmende <artmende@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 11:57:58 by artmende          #+#    #+#             */
-/*   Updated: 2021/09/22 16:16:02 by artmende         ###   ########.fr       */
+/*   Updated: 2021/09/23 11:48:59 by artmende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct s_nbr_list
 {
 	int					nbr;
 	struct s_nbr_list	*next;
+	struct s_nbr_list	*previous;
 }				t_nbr_list;
 
 typedef struct s_stacks_a_b
