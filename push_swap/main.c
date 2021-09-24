@@ -6,7 +6,7 @@
 /*   By: artmende <artmende@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 11:57:26 by artmende          #+#    #+#             */
-/*   Updated: 2021/09/23 18:56:46 by artmende         ###   ########.fr       */
+/*   Updated: 2021/09/24 15:54:08 by artmende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,23 +78,46 @@ void	send_nbr_to_b(t_stacks_a_b *stacks, int nbr, char u_d)
 	{ // at the end of this loop, stacks->a points to the number we want to send
 		if (u_d == 'u')
 		{
-			write(1, "ra\n", 4);
+			write(1, "ra\n", 3);
 			ra(stacks);
 		}
 		else
 		{
-			write(1, "rra\n", 5);
+			write(1, "rra\n", 4);
 			rra(stacks);
 		}
 	}
-	write(1, "pb\n", 4);
+	write(1, "pb\n", 3);
 	pb(stacks);
 }
 
-t_easier_nbr_to_send	find_nbr_to_send_above_mid(t_nbr_list *list, int mid)
+void	send_nbr_to_a(t_stacks_a_b *stacks, int nbr, char u_d)
+{
+	while (stacks->b && stacks->b->nbr != nbr)
+	{ // at the end of this loop, stacks->b points to the number we want to send
+		if (u_d == 'u')
+		{
+			write(1, "rb\n", 3);
+			rb(stacks);
+		}
+		else
+		{
+			write(1, "rrb\n", 4);
+			rrb(stacks);
+		}
+	}
+	write(1, "pa\n", 3);
+	pa(stacks);
+}
+
+
+
+
+
+t_data_to_send_nbr	find_nbr_to_send_above_mid(t_nbr_list *list, int mid)
 {
 	int						i;
-	t_easier_nbr_to_send	ret;
+	t_data_to_send_nbr	ret;
 
 	i = 0;
 	ret.list_size = ft_lstsize(list);
@@ -144,7 +167,7 @@ void	send_bigger_half_to_b(t_stacks_a_b *stacks)
 	// back to the top of the loop
 
 	int	mid_value;
-	t_easier_nbr_to_send	easier_number;
+	t_data_to_send_nbr	easier_number;
 
 	mid_value = find_mid_value(stacks->a);
 	
@@ -154,53 +177,95 @@ void	send_bigger_half_to_b(t_stacks_a_b *stacks)
 		easier_number = find_nbr_to_send_above_mid(stacks->a, mid_value);
 		send_nbr_to_b(stacks, easier_number.nbr, easier_number.u_d);
 	}
+}
 
-
-
-
-/* 
-	t_nbr_list	*from_top;
-	t_nbr_list	*from_bottom;
-
-	from_top = stacks->a;
-	from_bottom = stacks->a;
-	while (from_bottom && from_bottom->next)
-		from_bottom = from_bottom->next;
-	while (from_bottom && from_top && from_bottom != from_top)
+t_data_to_send_nbr	find_biggest_nbr_and_direction(t_nbr_list *list)
+{
+	int					i;
+	t_data_to_send_nbr	ret;
+	
+	i = 0;
+	ret.list_size = ft_lstsize(list);
+	ret.u_d = 'u';
+	if (list)
+		ret.nbr = list->nbr;
+	while (list)
 	{
-		if (from_top->nbr > mid_value)
+		if (list->nbr > ret.nbr)
 		{
-			// send it to the top with ra and pb
-			// reinitialize both ptr
-			send_nbr_to_b(stacks, from_top->nbr, 'u');
-			from_top = stacks->a;
+			ret.nbr = list->nbr;
+			if (i > ret.list_size / 2)
+				ret.u_d = 'd';
 		}
-		else if (from_bottom->nbr > mid_value)
-		{
-			// send it to the top with rra and pb
-			// reinitialize both ptr
-			send_nbr_to_b(stacks, from_bottom->nbr, 'd');
-			from_bottom = stacks->a;
-			while (from_bottom && from_bottom->next)
-				from_bottom = from_bottom->next;
-		}
-		else
-		{
-			from_top = from_top->next;
-			if (from_top != from_bottom)
-				from_bottom = from_bottom->previous;
-		}
+		i++;
+		list = list->next;
+	}
+	return (ret);
+}
+
+int	get_biggest_nbr_in_list(t_nbr_list *list)
+{
+	int	biggest_number;
+
+	biggest_number = 0;
+	if (list)
+		biggest_number = list->nbr;
+
+/* 	while (list)
+	{
+		if (biggest_number < list->nbr)
+			biggest_number = list->nbr;
+		list = list->next;
+	} */
+
+	while (list->next)
+	{
+		if (biggest_number < list->next->nbr)
+			biggest_number = list->next->nbr;
+		list = list->next;
 	}
 
- */
 
-
-
-
-
-
-
+	return (biggest_number);
 }
+
+void	send_numbers_back_to_a(t_stacks_a_b *stacks)
+{
+	t_data_to_send_nbr	nbr_to_send;
+
+	while (stacks->b)
+	{
+		nbr_to_send = find_biggest_nbr_and_direction(stacks->b);
+		send_nbr_to_a(stacks, nbr_to_send.nbr, nbr_to_send.u_d);
+	}
+}
+
+void	send_small_numbers_to_b(t_stacks_a_b *stacks)
+{
+	int	nbr_max;
+	t_nbr_list	*ptr;
+
+//	nbr_max = get_biggest_nbr_in_list(stacks->a);
+	ptr = stacks->a;
+	if (ptr)
+		nbr_max = ptr->nbr;
+	while (ptr && ptr->next)
+	{
+		if (ptr->next->nbr > nbr_max)
+			nbr_max = ptr->next->nbr;
+		ptr = ptr->next;
+	} // ptr is now on the last element of stack a
+	while (ptr && ptr->nbr != nbr_max)
+	{
+		rra(stacks);
+		pb(stacks);
+		write(1, "rra\npb\n", 7);
+		ptr = stacks->a;
+		while (ptr && ptr->next)
+			ptr = ptr->next;
+	}
+}
+
 
 int	main(int argc, char **argv)
 {
@@ -214,7 +279,8 @@ int	main(int argc, char **argv)
 	// reverse and send to b smaller half
 	// send back b to a in order
 
-printf("mid value is : %d\n", find_mid_value(stacks.a));
+//	printf("mid value is : %d\n", find_mid_value(stacks.a));
+//	printf("MAX nbr is %d\n", get_biggest_nbr_in_list(stacks.a));
 
 	t_nbr_list	*ptr1;
 	t_nbr_list	*ptr2;
@@ -226,28 +292,41 @@ printf("mid value is : %d\n", find_mid_value(stacks.a));
 
 		ptr1 = stacks.a;
 
-	write(1, "\nPrinting stack a from the top :\n", 34);
+//	write(1, "\nPrinting stack a from the top :\n", 34);
 	while (ptr1)
 	{
-		printf("%d\n", ptr1->nbr);
+//		printf("%d\n", ptr1->nbr);
 		
 		if (!ptr1->next)
 			ptr2 = ptr1;
 		ptr1 = ptr1->next;
 	}
 
+//	t_data_to_send_nbr biggest_number = find_biggest_nbr_and_direction(stacks.a);
+
+//	printf("biggest number is %d and it has to be sent with direction %c\n", biggest_number.nbr, biggest_number.u_d);
 
 
-
+/* 
 	printf("\nSending all above mid value to stack b\n\n");
+	printf("Sending back to A in order\n\n");
+	printf("Sending all small numbers to stack b\n\n");
+	printf("Sending back to A in order\n\n"); */
+	
 	send_bigger_half_to_b(&stacks);
+	send_numbers_back_to_a(&stacks);
+	send_small_numbers_to_b(&stacks);
+	send_numbers_back_to_a(&stacks);
+
+
+
 
 		ptr1 = stacks.a;
 
-	write(1, "\nPrinting stack a from the top :\n", 34);
+//	write(1, "\nPrinting stack a from the top :\n", 33);
 	while (ptr1)
 	{
-		printf("%d\n", ptr1->nbr);
+//		printf("%d\n", ptr1->nbr);
 		
 		if (!ptr1->next)
 			ptr2 = ptr1;
@@ -256,10 +335,10 @@ printf("mid value is : %d\n", find_mid_value(stacks.a));
 
 		ptr1 = stacks.b;
 
-	write(1, "\nPrinting stack b from the top :\n", 34);
+//	write(1, "\nPrinting stack b from the top :\n", 33);
 	while (ptr1)
 	{
-		printf("%d\n", ptr1->nbr);
+//		printf("%d\n", ptr1->nbr);
 		
 		if (!ptr1->next)
 			ptr2 = ptr1;

@@ -6,7 +6,7 @@
 /*   By: artmende <artmende@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 11:57:58 by artmende          #+#    #+#             */
-/*   Updated: 2021/09/23 18:33:17 by artmende         ###   ########.fr       */
+/*   Updated: 2021/09/24 10:17:00 by artmende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,13 @@ typedef struct s_stacks_a_b
 	char				*line;
 }				t_malloc_stuff; */
 
-typedef struct s_easier_nbr_to_send
+typedef struct s_data_to_send_nbr
 {
 	int			nbr;
 	int			index;
 	char		u_d;
 	int			list_size;
-}				t_easier_nbr_to_send;
+}				t_data_to_send_nbr;
 
 
 int	call_exit(t_nbr_list **stack_a, t_nbr_list **stack_b, char *line);
