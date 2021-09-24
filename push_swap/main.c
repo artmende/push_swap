@@ -6,7 +6,7 @@
 /*   By: artmende <artmende@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 11:57:26 by artmende          #+#    #+#             */
-/*   Updated: 2021/09/24 15:54:08 by artmende         ###   ########.fr       */
+/*   Updated: 2021/09/24 18:33:29 by artmende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,6 +266,114 @@ void	send_small_numbers_to_b(t_stacks_a_b *stacks)
 	}
 }
 
+int	find_biggest_nbr_smaller_than_nbr(t_nbr_list *list, int nbr)
+{
+	int			ret;
+	t_nbr_list	*ptr;
+
+	ptr = list;
+	while (ptr)
+	{
+		if (ptr->nbr < nbr)
+		{
+			ret = ptr->nbr;
+			break ;
+		}
+		ptr = ptr->next;
+	}
+	if (!ptr)
+		return (get_biggest_nbr_in_list(list));
+	while (list)
+	{
+		if (list->nbr < nbr && list->nbr > ret)
+			ret = list->nbr;
+		list = list->next;
+	}
+	return (ret);
+}
+
+int	get_index_nbr(t_nbr_list *list, int nbr)
+{
+	int	index;
+
+	index = 0;
+	while (list)
+	{
+		if (list->nbr == nbr)
+			break ;
+		index++;
+		list = list->next;
+	}
+	return (index);
+}
+
+t_rot_dir	fill_rot_dir(t_stacks_a_b *stacks, int index_a, int index_b)
+{
+	t_rot_dir	ret;
+	int	size_a;
+	int	size_b;
+
+	size_a = get_nbr_of_element(stacks->a);
+	size_b = get_nbr_of_element(stacks->b);
+	ret.ra_rb = index_a + index_b - ft_min(index_a, index_b);
+	ret.ra_rrb = index_a + (size_b - index_b);
+	ret.rra_rb = (size_a - index_a) + index_b;
+	ret.rra_rrb = (size_a - index_a) + (size_b - index_b)
+		- (ft_min(size_a - index_a, size_b - index_b));
+	return (ret);
+}
+
+void	get_nbr_actions_to_sort(t_stacks_a_b *stacks, int index_a, t_nbr_list *nbr)
+{
+	int	index_b;
+	t_rot_dir	rot_dir;
+
+	index_b = get_index_nbr(stacks->b,
+		find_biggest_nbr_smaller_than_nbr(stacks->b, nbr->nbr));
+	rot_dir = fill_rot_dir(stacks, index_a, index_b);
+	if (rot_dir.ra_rb <= rot_dir.ra_rrb && rot_dir.ra_rb <= rot_dir.rra_rb
+		&& rot_dir.ra_rb <= rot_dir.rra_rrb) // ra_rb is smaller than all others
+	{
+		nbr->nbr_actions_to_sort = rot_dir.ra_rb;
+		nbr->dir_to_sort = 1;
+	}
+	else if (rot_dir.ra_rrb <= rot_dir.ra_rb && rot_dir.ra_rrb <= rot_dir.rra_rb
+		&& rot_dir.ra_rrb <= rot_dir.rra_rrb) // ra_rrb is smaller than all others
+	{
+		nbr->nbr_actions_to_sort = rot_dir.ra_rrb;
+		nbr->dir_to_sort = 2;
+	}
+	else if (rot_dir.rra_rb <= rot_dir.ra_rb && rot_dir.rra_rb <= rot_dir.ra_rrb
+		&& rot_dir.rra_rb <= rot_dir.rra_rrb) // rra_rb is smaller than all others
+	{
+		nbr->nbr_actions_to_sort = rot_dir.rra_rb;
+		nbr->dir_to_sort = 3;
+	}
+	else
+	{
+		nbr->nbr_actions_to_sort = rot_dir.rra_rrb;
+		nbr->dir_to_sort = 4;
+	}
+}
+
+
+
+void	find_nbr_in_a_requiring_least_actions(t_stacks_a_b *stacks)
+{
+	int			index;
+	t_nbr_list	*ptr;
+
+	index = 0;
+	ptr = stacks->a;
+	while (ptr)
+	{
+		get_nbr_actions_to_sort(stacks, index, ptr);
+		index++;
+		ptr = ptr->next;
+	}
+}
+
+
 
 int	main(int argc, char **argv)
 {
@@ -311,22 +419,23 @@ int	main(int argc, char **argv)
 	printf("\nSending all above mid value to stack b\n\n");
 	printf("Sending back to A in order\n\n");
 	printf("Sending all small numbers to stack b\n\n");
-	printf("Sending back to A in order\n\n"); */
-	
-	send_bigger_half_to_b(&stacks);
-	send_numbers_back_to_a(&stacks);
+	printf("Sending back to A in order\n\n");
+ */
+
+//	send_bigger_half_to_b(&stacks);
+//	send_numbers_back_to_a(&stacks);
 	send_small_numbers_to_b(&stacks);
-	send_numbers_back_to_a(&stacks);
+//	send_numbers_back_to_a(&stacks);
 
 
 
 
 		ptr1 = stacks.a;
 
-//	write(1, "\nPrinting stack a from the top :\n", 33);
+	write(1, "\nPrinting stack a from the top :\n", 33);
 	while (ptr1)
 	{
-//		printf("%d\n", ptr1->nbr);
+		printf("%d\n", ptr1->nbr);
 		
 		if (!ptr1->next)
 			ptr2 = ptr1;
@@ -335,15 +444,17 @@ int	main(int argc, char **argv)
 
 		ptr1 = stacks.b;
 
-//	write(1, "\nPrinting stack b from the top :\n", 33);
+	write(1, "\nPrinting stack b from the top :\n", 33);
 	while (ptr1)
 	{
-//		printf("%d\n", ptr1->nbr);
+		printf("%d\n", ptr1->nbr);
 		
 		if (!ptr1->next)
 			ptr2 = ptr1;
 		ptr1 = ptr1->next;
 	}
+
+//printf("biggest number smaller than 100 is %d\n", find_biggest_nbr_smaller_than_nbr(stacks.b, 100));
 
 
 	return (0);
@@ -355,7 +466,7 @@ int	call_exit(t_nbr_list **stack_a, t_nbr_list **stack_b, char *line)
 	free_linked_list(stack_a);
 	free_linked_list(stack_b);
 //	free(line);
-	write(2, "Error\n", 7);
+	write(2, "Error\n", 6);
 	exit(EXIT_FAILURE);
 	return (0);
 }
