@@ -6,7 +6,7 @@
 /*   By: artmende <artmende@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 10:43:35 by artmende          #+#    #+#             */
-/*   Updated: 2021/09/21 15:37:26 by artmende         ###   ########.fr       */
+/*   Updated: 2021/09/25 14:05:58 by artmende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,9 @@ void	verify_stack_a_is_sorted(t_malloc_stuff *data)
 		list_ptr = list_ptr->next;
 	}
 	if (!data->stacks.a || data->stacks.nbr_of_element != 1)
-		write(1, "KO\n", 4);
+		write(1, "KO\n", 3);
 	else
-		write(1, "OK\n", 4);
+		write(1, "OK\n", 3);
 	free_linked_list(&data->stacks.a);
 	free_linked_list(&data->stacks.b);
 }
@@ -96,7 +96,7 @@ int	call_exit(t_nbr_list **stack_a, t_nbr_list **stack_b, char *line)
 	free_linked_list(stack_a);
 	free_linked_list(stack_b);
 	free(line);
-	write(2, "Error\n", 7);
+	write(2, "Error\n", 6);
 	exit(EXIT_FAILURE);
 	return (0);
 }
