@@ -6,7 +6,7 @@
 /*   By: artmende <artmende@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 11:57:26 by artmende          #+#    #+#             */
-/*   Updated: 2021/09/24 18:33:29 by artmende         ###   ########.fr       */
+/*   Updated: 2021/09/26 17:25:59 by artmende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 */
 
 int	get_nbr_of_element(t_nbr_list *list)
-{
+{ // this is lst_size, we don't need it !
 	int	nbr_of_element;
 
 	nbr_of_element = 0;
@@ -323,14 +323,12 @@ t_rot_dir	fill_rot_dir(t_stacks_a_b *stacks, int index_a, int index_b)
 	return (ret);
 }
 
-void	get_nbr_actions_to_sort(t_stacks_a_b *stacks, int index_a, t_nbr_list *nbr)
-{
-	int	index_b;
+void	get_nbr_actions_to_sort(t_stacks_a_b *stacks, t_nbr_list *nbr)
+{ // can get less than 25 lines by removing else, and making it default before if if if
+	// or sending rotdir as a parameter (no need to declare it, just call the function inside of the parenthesis when calling get_nbr_actions_to_sort)
 	t_rot_dir	rot_dir;
 
-	index_b = get_index_nbr(stacks->b,
-		find_biggest_nbr_smaller_than_nbr(stacks->b, nbr->nbr));
-	rot_dir = fill_rot_dir(stacks, index_a, index_b);
+	rot_dir = fill_rot_dir(stacks, nbr->index_a, nbr->index_b);
 	if (rot_dir.ra_rb <= rot_dir.ra_rrb && rot_dir.ra_rb <= rot_dir.rra_rb
 		&& rot_dir.ra_rb <= rot_dir.rra_rrb) // ra_rb is smaller than all others
 	{
@@ -356,24 +354,97 @@ void	get_nbr_actions_to_sort(t_stacks_a_b *stacks, int index_a, t_nbr_list *nbr)
 	}
 }
 
-
-
-void	find_nbr_in_a_requiring_least_actions(t_stacks_a_b *stacks)
+void	browse_a_to_get_all_nbr_of_actions(t_stacks_a_b *stacks)
 {
-	int			index;
+	int			index_a;
+	int			index_b;
 	t_nbr_list	*ptr;
 
-	index = 0;
+	index_a = 0;
 	ptr = stacks->a;
 	while (ptr)
 	{
-		get_nbr_actions_to_sort(stacks, index, ptr);
-		index++;
+		ptr->index_a = index_a;
+		ptr->index_b = get_index_nbr(stacks->b,
+			find_biggest_nbr_smaller_than_nbr(stacks->b, ptr->nbr));
+		get_nbr_actions_to_sort(stacks, ptr); // a third parameter that is my rotdir
+		index_a++;
 		ptr = ptr->next;
 	}
 }
 
 
+t_nbr_list	*find_nbr_in_a_requiring_least_actions(t_stacks_a_b *stacks)
+{
+	int			nbr_of_actions;
+	t_nbr_list	*ptr;
+	t_nbr_list	*nbr_with_least_actions;
+
+	browse_a_to_get_all_nbr_of_actions(stacks);
+	//at the end of this function, we have for all numbers in stack A :
+	// - the best scenario to send the number (ra-rb, ra-rrb, rra-rb, rra-rrb)
+	// - index_a and index_b, so that's the number of movement we need to do in each stacks
+	// - the total number of actions, using the best scenario
+
+	//	It's time now to actually find the number that has the least required actions.
+	ptr = stacks->a;
+	nbr_with_least_actions = stacks->a;
+	if (stacks->a)
+		nbr_of_actions = stacks->a->nbr_actions_to_sort;
+	while (ptr)
+	{
+		if (ptr->nbr_actions_to_sort <= nbr_of_actions)
+			nbr_with_least_actions = ptr;
+		ptr = ptr->next;
+	}
+	return (nbr_with_least_actions);
+}
+
+
+void	sort_stack_a_size_above_3(t_stacks_a_b *stacks)
+{
+	t_nbr_list	*nbr_with_least_actions;
+
+	(void)(!pb(stacks) && !pb(stacks)); // push the 2 first elements
+//	if (elements_in_pb_are_in_ascending_order)
+//		swap them
+	while (stacks->a)
+	{
+		nbr_with_least_actions = find_nbr_in_a_requiring_least_actions(stacks);
+		if (nbr_with_least_actions->dir_to_sort == 1)
+		{
+
+		}
+		else if (nbr_with_least_actions->dir_to_sort == 2)
+		{
+
+		}
+		else if (nbr_with_least_actions->dir_to_sort == 3)
+		{
+
+		}
+		else
+		{
+			
+		}
+	}
+	// send all back to A
+}
+
+
+/* 
+
+	1) send the first 2 elements to B.
+	2) check if the biggest of the 2 is at the top, if not swap b
+	3) browse stack A and for all numbers save the moving type and number of action
+	4) select the number with fewest actions and call the right scenario with number to move
+	5) the scenario function execute the moves
+	6) back to point 3, until stack A is empty
+	7) pa until stack B is empty
+
+
+
+ */
 
 int	main(int argc, char **argv)
 {

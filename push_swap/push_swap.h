@@ -6,7 +6,7 @@
 /*   By: artmende <artmende@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 11:57:58 by artmende          #+#    #+#             */
-/*   Updated: 2021/09/24 18:20:40 by artmende         ###   ########.fr       */
+/*   Updated: 2021/09/26 16:57:47 by artmende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ typedef struct s_nbr_list
 	int					nbr;
 	int					nbr_actions_to_sort;
 	int					dir_to_sort;
+	int					index_a;
+	int					index_b;
 	struct s_nbr_list	*next;
 	struct s_nbr_list	*previous;
 }				t_nbr_list;
@@ -40,7 +42,7 @@ typedef struct s_stacks_a_b
 	char				*line;
 }				t_malloc_stuff; */
 
-typedef struct s_data_to_send_nbr
+typedef struct s_data_to_send_nbr // this is only used in the first algorithm that i will delete
 {
 	int			nbr;
 	int			index;
