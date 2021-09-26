@@ -6,7 +6,7 @@
 /*   By: artmende <artmende@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 11:57:26 by artmende          #+#    #+#             */
-/*   Updated: 2021/09/26 17:25:59 by artmende         ###   ########.fr       */
+/*   Updated: 2021/09/26 20:26:35 by artmende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -361,6 +361,7 @@ void	browse_a_to_get_all_nbr_of_actions(t_stacks_a_b *stacks)
 	t_nbr_list	*ptr;
 
 	index_a = 0;
+	index_b = 0;
 	ptr = stacks->a;
 	while (ptr)
 	{
@@ -400,35 +401,46 @@ t_nbr_list	*find_nbr_in_a_requiring_least_actions(t_stacks_a_b *stacks)
 	return (nbr_with_least_actions);
 }
 
+void	swap_b_if_first_2_elements_are_ascending(t_stacks_a_b *stacks)
+{
+	if (stacks->b && stacks->b->next && stacks->b->nbr > stacks->b->next->nbr)
+	{
+		write(1, "sb\n", 3);
+		sb(stacks);
+	}
+}
+
+void	push_b_two_times(t_stacks_a_b *stacks)
+{
+	write(1, "pb\npb\n", 6);
+	pb(stacks);
+	pb(stacks);
+}
 
 void	sort_stack_a_size_above_3(t_stacks_a_b *stacks)
 {
 	t_nbr_list	*nbr_with_least_actions;
 
-	(void)(!pb(stacks) && !pb(stacks)); // push the 2 first elements
-//	if (elements_in_pb_are_in_ascending_order)
-//		swap them
+	push_b_two_times(stacks);
+	swap_b_if_first_2_elements_are_ascending(stacks);
 	while (stacks->a)
 	{
 		nbr_with_least_actions = find_nbr_in_a_requiring_least_actions(stacks);
 		if (nbr_with_least_actions->dir_to_sort == 1)
-		{
-
-		}
+			send_to_b_ra_rb(stacks, nbr_with_least_actions);
 		else if (nbr_with_least_actions->dir_to_sort == 2)
-		{
-
-		}
+			send_to_b_ra_rrb(stacks, nbr_with_least_actions);
 		else if (nbr_with_least_actions->dir_to_sort == 3)
-		{
-
-		}
+			send_to_b_rra_rb(stacks, nbr_with_least_actions);
 		else
-		{
-			
-		}
+			send_to_b_rra_rrb(stacks, nbr_with_least_actions);
 	}
 	// send all back to A
+	while(stacks->b)
+	{
+		write(1, "pa\n", 3);
+		pa(stacks);
+	}
 }
 
 
@@ -471,7 +483,7 @@ int	main(int argc, char **argv)
 
 		ptr1 = stacks.a;
 
-//	write(1, "\nPrinting stack a from the top :\n", 34);
+//	write(1, "\nPrinting stack a from the top :\n", 33);
 	while (ptr1)
 	{
 //		printf("%d\n", ptr1->nbr);
@@ -480,7 +492,7 @@ int	main(int argc, char **argv)
 			ptr2 = ptr1;
 		ptr1 = ptr1->next;
 	}
-
+//	write(1, "\n", 1);
 //	t_data_to_send_nbr biggest_number = find_biggest_nbr_and_direction(stacks.a);
 
 //	printf("biggest number is %d and it has to be sent with direction %c\n", biggest_number.nbr, biggest_number.u_d);
@@ -495,10 +507,10 @@ int	main(int argc, char **argv)
 
 //	send_bigger_half_to_b(&stacks);
 //	send_numbers_back_to_a(&stacks);
-	send_small_numbers_to_b(&stacks);
+//	send_small_numbers_to_b(&stacks);
 //	send_numbers_back_to_a(&stacks);
 
-
+sort_stack_a_size_above_3(&stacks);
 
 
 		ptr1 = stacks.a;
@@ -515,10 +527,10 @@ int	main(int argc, char **argv)
 
 		ptr1 = stacks.b;
 
-	write(1, "\nPrinting stack b from the top :\n", 33);
+//	write(1, "\nPrinting stack b from the top :\n", 33);
 	while (ptr1)
 	{
-		printf("%d\n", ptr1->nbr);
+//		printf("%d\n", ptr1->nbr);
 		
 		if (!ptr1->next)
 			ptr2 = ptr1;

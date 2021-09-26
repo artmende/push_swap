@@ -6,7 +6,7 @@
 /*   By: artmende <artmende@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 11:01:26 by artmende          #+#    #+#             */
-/*   Updated: 2021/09/23 13:00:20 by artmende         ###   ########.fr       */
+/*   Updated: 2021/09/26 20:11:05 by artmende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,11 @@ int	sb(t_stacks_a_b *stacks)
 	temp1 = stacks->b;
 	temp2 = stacks->b->next->next;
 	stacks->b = stacks->b->next;
-	stacks->b->previous = 0; //
-	temp1->previous = stacks->b; //
+//	stacks->b->previous = 0; //
+//	temp1->previous = stacks->b; //
 	stacks->b->next = temp1;
 	temp1->next = temp2;
-	temp2->previous = temp1; //
+//	temp2->previous = temp1; //
 	return (0);
 }
 
