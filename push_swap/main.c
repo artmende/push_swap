@@ -6,7 +6,7 @@
 /*   By: artmende <artmende@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 11:57:26 by artmende          #+#    #+#             */
-/*   Updated: 2021/09/28 11:52:01 by artmende         ###   ########.fr       */
+/*   Updated: 2021/09/28 16:48:04 by artmende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -537,13 +537,16 @@ int	main(int argc, char **argv)
 
 //sort_stack_a_size_above_3(&stacks);
 
+	sort_stack_a_chunks(&stacks);
+
+//choose_nbr_to_send_to_b(50, ft_lstsize(stacks.a), &stacks);
 
 		ptr1 = stacks.a;
 
-	write(1, "\nPrinting stack a from the top :\n", 33);
+//	write(1, "\nPrinting stack a from the top :\n", 33);
 	while (ptr1)
 	{
-		printf("%d\n", ptr1->nbr);
+//		printf("%d\n", ptr1->nbr);
 		
 		if (!ptr1->next)
 			ptr2 = ptr1;
@@ -565,6 +568,7 @@ int	main(int argc, char **argv)
 //printf("biggest number smaller than 100 is %d\n", find_biggest_nbr_smaller_than_nbr(stacks.b, 100));
 
 //	printf("pivot value is : %d\n", find_pivot_value(2, stacks.a));
+//	printf("Fourth biggest number is stack is %d\n", find_fourth_biggest_nbr_in_list(stacks.a));
 
 
 	return (0);
