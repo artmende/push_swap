@@ -6,7 +6,7 @@
 /*   By: artmende <artmende@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 11:57:58 by artmende          #+#    #+#             */
-/*   Updated: 2021/09/26 19:54:16 by artmende         ###   ########.fr       */
+/*   Updated: 2021/09/28 11:44:07 by artmende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,13 @@ typedef struct s_rot_dir
 
 
 int	call_exit(t_nbr_list **stack_a, t_nbr_list **stack_b, char *line);
+
+
+
+
+int	find_pivot_value(int number_of_chunks, t_nbr_list *list);
+
+
 
 /*
 **	verify_and_store_nbrs.c

@@ -6,7 +6,7 @@
 /*   By: artmende <artmende@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 11:57:26 by artmende          #+#    #+#             */
-/*   Updated: 2021/09/26 20:26:35 by artmende         ###   ########.fr       */
+/*   Updated: 2021/09/28 11:52:01 by artmende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -458,6 +458,31 @@ void	sort_stack_a_size_above_3(t_stacks_a_b *stacks)
 
  */
 
+/* 
+	select number of chunks.
+	while number of chunks is not 1 -->
+		find pivot value based on chunk (we have to send 1/chunk_left elements)
+		send all value under pivot to b using fastest way
+		chunks-- and back to the top
+	<--
+	if chunks == 1 -->
+		send all to b except for the 3 biggest
+		algo with 3 elements (put the biggest down, then swap)
+	<--
+	push all back to A in order using the fastest way
+ */
+
+
+
+
+
+
+
+
+
+
+
+
 int	main(int argc, char **argv)
 {
 	t_stacks_a_b	stacks;
@@ -510,7 +535,7 @@ int	main(int argc, char **argv)
 //	send_small_numbers_to_b(&stacks);
 //	send_numbers_back_to_a(&stacks);
 
-sort_stack_a_size_above_3(&stacks);
+//sort_stack_a_size_above_3(&stacks);
 
 
 		ptr1 = stacks.a;
@@ -538,6 +563,8 @@ sort_stack_a_size_above_3(&stacks);
 	}
 
 //printf("biggest number smaller than 100 is %d\n", find_biggest_nbr_smaller_than_nbr(stacks.b, 100));
+
+//	printf("pivot value is : %d\n", find_pivot_value(2, stacks.a));
 
 
 	return (0);
