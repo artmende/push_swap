@@ -6,7 +6,7 @@
 /*   By: artmende <artmende@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 11:09:26 by artmende          #+#    #+#             */
-/*   Updated: 2021/09/28 17:30:45 by artmende         ###   ########.fr       */
+/*   Updated: 2021/09/28 18:31:54 by artmende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 int	choose_number_of_chunks(t_stacks_a_b *stacks)
 {
 	(void)stacks;
-	return (8);
+	return (13);
 }
 
 int	find_pivot_value(int number_of_chunks, t_nbr_list *list)
