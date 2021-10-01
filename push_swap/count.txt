@@ -1,3 +1,7 @@
+
+
+ARG=$(~/generate_random_string_of_number/a.out 500 -); gcc -o push_swap -Wall -Wextra -Werror *.c mix_libft/*.c && ./push_swap $ARG > test4.txt; cat test4.txt | ../checker_Mac $ARG; wc -l test4.txt
+
 9
 9
 9

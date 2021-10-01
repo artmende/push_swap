@@ -6,7 +6,7 @@
 /*   By: artmende <artmende@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 11:09:26 by artmende          #+#    #+#             */
-/*   Updated: 2021/09/28 18:31:54 by artmende         ###   ########.fr       */
+/*   Updated: 2021/10/01 16:24:07 by artmende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,18 @@
 
 int	choose_number_of_chunks(t_stacks_a_b *stacks)
 {
-	(void)stacks;
-	return (13);
+	if (stacks->nbr_of_element < 2 || is_list_sorted(stacks->a))
+		return (-1);
+	else if (stacks->nbr_of_element == 2 || stacks->nbr_of_element == 3)
+		return (0);
+	else if (stacks->nbr_of_element < 20)
+		return (1);
+	else if (stacks->nbr_of_element < 50)
+		return (2);
+	else if (stacks->nbr_of_element < 200)
+		return (6);
+	else
+		return (13);
 }
 
 int	find_pivot_value(int number_of_chunks, t_nbr_list *list)
@@ -64,7 +74,7 @@ int	find_pivot_value(int number_of_chunks, t_nbr_list *list)
 	return (pivot);
 }
 
-void	send_nbr_to_b_chunks(int size_a, int index_nbr, t_stacks_a_b *stacks)
+void	send_nbr_to_b(int size_a, int index_nbr, t_stacks_a_b *stacks)
 {
 	if (index_nbr <= size_a / 2)
 	{
@@ -108,8 +118,7 @@ void	choose_nbr_to_send_to_b(int pivot_value, int size_a, t_stacks_a_b *stacks)
 			index_nbr_to_send = index;
 			break ;
 		}
-		index++;
-		ptr = ptr->next;
+		(void)(++index && (ptr = ptr->next));
 	}
 	while (ptr && index < size_a / 2)
 		(void)(++index && (ptr = ptr->next));
@@ -117,11 +126,9 @@ void	choose_nbr_to_send_to_b(int pivot_value, int size_a, t_stacks_a_b *stacks)
 	{
 		if (ptr->nbr <= pivot_value && index_nbr_to_send > size_a - index)
 			index_nbr_to_send = index;
-		index++;
-		ptr = ptr->next;
+		(void)(++index && (ptr = ptr->next));
 	}
-//	printf("index nbr to send is : %d\n", index_nbr_to_send);
-	send_nbr_to_b_chunks(size_a, index_nbr_to_send, stacks);
+	send_nbr_to_b(size_a, index_nbr_to_send, stacks);
 }
 
 int	list_contains_something_less_or_equal_than_pivot(int pivot, t_nbr_list *lst)
@@ -227,11 +234,13 @@ int	get_index_biggest_nbr(t_nbr_list *list)
 	return (index);
 }
 
-void	sort_a_3_elements(t_stacks_a_b *stacks)
+void	sort_a_2_or_3_elements(t_stacks_a_b *stacks)
 {
 	int	index_biggest;
+	int	size_a;
 
-	if (ft_lstsize(stacks->a) < 3)
+	size_a = ft_lstsize(stacks->a);
+	if (size_a < 2)
 		return ;
 	index_biggest = get_index_biggest_nbr(stacks->a);
 	if (index_biggest == 0)
@@ -240,7 +249,7 @@ void	sort_a_3_elements(t_stacks_a_b *stacks)
 		ra(stacks);
 	}
 	else
-		if (index_biggest == 1)
+		if (index_biggest == 1 && size_a == 3)
 		{
 			write(1, "rra\n", 4);
 			rra(stacks);
@@ -261,7 +270,7 @@ void	send_back_to_a_in_order(t_stacks_a_b *stacks)
 	{
 		size_b = ft_lstsize(stacks->b);
 		index_biggest_nbr = get_index_biggest_nbr(stacks->b);
-		if (index_biggest_nbr == 1)
+		if (index_biggest_nbr == 1 && size_b > 2)
 		{
 			write(1, "sb\n", 3);
 			sb(stacks);
@@ -299,6 +308,8 @@ void	sort_stack_a_chunks(t_stacks_a_b *stacks)
 	int	pivot_value;
 
 	number_of_chunks = choose_number_of_chunks(stacks);
+	if (number_of_chunks == -1)
+		return ;
 	while (number_of_chunks > 1)
 	{
 		pivot_value = find_pivot_value(number_of_chunks, stacks->a);
@@ -306,10 +317,12 @@ void	sort_stack_a_chunks(t_stacks_a_b *stacks)
 		send_nbrs_under_pivot_value_to_b(pivot_value, stacks);
 		number_of_chunks--;
 	}
-	if (number_of_chunks == 1)
+	if (number_of_chunks == 1) // good for less than 10 elements
 	{
 		send_all_to_b_except_3_biggest(stacks);
-		sort_a_3_elements(stacks);
+		sort_a_2_or_3_elements(stacks);
 	}
+	if (!number_of_chunks)
+		sort_a_2_or_3_elements(stacks);
 	send_back_to_a_in_order(stacks);
 }
