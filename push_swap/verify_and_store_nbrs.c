@@ -6,7 +6,7 @@
 /*   By: artmende <artmende@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 14:39:41 by artmende          #+#    #+#             */
-/*   Updated: 2021/10/01 16:45:35 by artmende         ###   ########.fr       */
+/*   Updated: 2021/10/02 11:29:12 by artmende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	verify_number_is_not_duplicate(int nbr, t_nbr_list **nbr_list)
 	while (cursor)
 	{
 		if (nbr == cursor->nbr && cursor->next)
-			call_exit(nbr_list, 0, 0);
+			call_exit(nbr_list);
 		cursor = cursor->next;
 	}
 }

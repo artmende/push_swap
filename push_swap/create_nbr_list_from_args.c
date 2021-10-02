@@ -6,7 +6,7 @@
 /*   By: artmende <artmende@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 15:21:52 by artmende          #+#    #+#             */
-/*   Updated: 2021/09/22 15:18:26 by artmende         ###   ########.fr       */
+/*   Updated: 2021/10/02 11:27:52 by artmende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	create_nbr_list_from_args(int argc, char **argv, t_stacks_a_b *stacks)
 		check_number_from_args(argv[i], &stacks->a);
 		new = malloc(sizeof(t_nbr_list));
 		if (!new)
-			call_exit(&stacks->a, 0, 0);
+			call_exit(&stacks->a);
 		ft_lstadd_back(&stacks->a, new);
 		stacks->nbr_of_element++;
 		new->nbr = ft_atoi(argv[i], &stacks->a);
@@ -55,7 +55,7 @@ void	check_number_from_args(char *str, t_nbr_list **nbr_list)
 		if (!ft_strchr("0123456789-", str[i])
 			|| (str[i] == '-' && i > 0)
 			|| (str[i] == '-' && !str[i + 1]))
-			call_exit(nbr_list, 0, 0);
+			call_exit(nbr_list);
 		i++;
 	}
 }

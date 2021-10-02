@@ -6,7 +6,7 @@
 /*   By: artmende <artmende@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 14:39:41 by artmende          #+#    #+#             */
-/*   Updated: 2021/09/21 15:31:51 by artmende         ###   ########.fr       */
+/*   Updated: 2021/10/02 11:52:14 by artmende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	store_numbers(int argc, char **argv, t_malloc_stuff *data)
 {
 	if (argc == 1)
-		call_exit(0, 0, 0);
+		return ;
 	else if (argc == 2)
 		create_nbr_list_from_str(argv[1], data);
 	else

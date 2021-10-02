@@ -6,7 +6,7 @@
 /*   By: artmende <artmende@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 11:57:58 by artmende          #+#    #+#             */
-/*   Updated: 2021/10/01 14:42:21 by artmende         ###   ########.fr       */
+/*   Updated: 2021/10/02 11:37:19 by artmende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,7 @@
 typedef struct s_nbr_list
 {
 	int					nbr;
-	int					nbr_actions_to_sort;
-	int					dir_to_sort;
-	int					index_a;
-	int					index_b;
 	struct s_nbr_list	*next;
-	struct s_nbr_list	*previous;
 }				t_nbr_list;
 
 typedef struct s_stacks_a_b
@@ -36,30 +31,8 @@ typedef struct s_stacks_a_b
 	struct s_nbr_list	*b;
 }				t_stacks_a_b;
 
-/* typedef struct s_malloc_stuff
-{
-	struct s_stacks_a_b	stacks;
-	char				*line;
-}				t_malloc_stuff; */
 
-typedef struct s_data_to_send_nbr // this is only used in the first algorithm that i will delete
-{
-	int			nbr;
-	int			index;
-	char		u_d;
-	int			list_size;
-}				t_data_to_send_nbr;
-
-typedef struct s_rot_dir
-{
-	int	ra_rb; // direction 1
-	int	ra_rrb; // direction 2
-	int	rra_rb; // direction 3
-	int	rra_rrb; // direction 4
-}				t_rot_dir;
-
-
-int	call_exit(t_nbr_list **stack_a, t_nbr_list **stack_b, char *line);
+int	call_exit(t_nbr_list **list);
 
 
 
@@ -144,6 +117,5 @@ int		ft_atoi(const char *str, t_nbr_list **nbr_list);
 char	*ft_strchr(const char *s, int c);
 void	*ft_memset(void *s, int c, size_t n);
 char	*ft_strnstr(char *str, char *to_find, size_t len);
-int		ft_min(int a, int b);
 
 #endif

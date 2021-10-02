@@ -6,7 +6,7 @@
 /*   By: artmende <artmende@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 15:00:27 by artmende          #+#    #+#             */
-/*   Updated: 2021/09/22 14:31:43 by artmende         ###   ########.fr       */
+/*   Updated: 2021/10/02 11:32:38 by artmende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,6 @@ int	ft_atoi(const char *str, t_nbr_list **nbr_list)
 	if (i > 10 || (i == 10 && *str > '2')
 		|| (minus == 1 && result_l > 2147483647)
 		|| (minus == -1 && result_l > 2147483648))
-		call_exit(nbr_list, 0, 0);
+		call_exit(nbr_list);
 	return ((int)(minus * result_l));
 }

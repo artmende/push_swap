@@ -6,7 +6,7 @@
 /*   By: artmende <artmende@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 15:26:29 by artmende          #+#    #+#             */
-/*   Updated: 2021/09/23 12:39:38 by artmende         ###   ########.fr       */
+/*   Updated: 2021/10/02 10:33:57 by artmende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ int	rra(t_stacks_a_b *stacks)
 	temp2 = temp1->next; // temps2 is the last element
 	temp1->next = 0;
 	temp2->next = stacks->a;
-	temp2->next->previous = temp2; // this one
-	temp2->previous = 0; // this one
 	stacks->a = temp2;
 	return (0);
 }
@@ -51,8 +49,6 @@ int	rrb(t_stacks_a_b *stacks)
 	temp2 = temp1->next;
 	temp1->next = 0;
 	temp2->next = stacks->b;
-	temp2->next->previous = temp2; // this one
-	temp2->previous = 0; // this one
 	stacks->b = temp2;
 	return (0);
 }

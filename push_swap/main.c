@@ -6,7 +6,7 @@
 /*   By: artmende <artmende@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 11:57:26 by artmende          #+#    #+#             */
-/*   Updated: 2021/10/01 11:49:15 by artmende         ###   ########.fr       */
+/*   Updated: 2021/10/02 11:33:42 by artmende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,18 +81,16 @@ int	main(int argc, char **argv)
 
 	sort_stack_a_chunks(&stacks);
 
-
+	free_linked_list(&stacks.a);
+	free_linked_list(&stacks.b);
 
 
 	return (0);
 }
 
-int	call_exit(t_nbr_list **stack_a, t_nbr_list **stack_b, char *line)
+int	call_exit(t_nbr_list **list)
 {
-	(void)line;
-	free_linked_list(stack_a);
-	free_linked_list(stack_b);
-//	free(line);
+	free_linked_list(list);
 	write(2, "Error\n", 6);
 	exit(EXIT_FAILURE);
 	return (0);

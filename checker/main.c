@@ -6,7 +6,7 @@
 /*   By: artmende <artmende@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 10:43:35 by artmende          #+#    #+#             */
-/*   Updated: 2021/09/25 14:05:58 by artmende         ###   ########.fr       */
+/*   Updated: 2021/10/02 11:53:32 by artmende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ int	main(int argc, char **argv)
 {
 	t_malloc_stuff	stacks_line;
 
+	if (argc == 1)
+		return (0);
 	ft_memset(&stacks_line, 0, sizeof(stacks_line));
 	store_numbers(argc, argv, &stacks_line);
 	reading_instructions_loop(&stacks_line);
