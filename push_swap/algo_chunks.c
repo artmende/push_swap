@@ -6,13 +6,13 @@
 /*   By: artmende <artmende@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 11:09:26 by artmende          #+#    #+#             */
-/*   Updated: 2021/10/02 11:09:20 by artmende         ###   ########.fr       */
+/*   Updated: 2021/10/05 10:59:27 by artmende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-/* 
+/*
 	select number of chunks.
 	while number of chunks is not 1 -->
 		find pivot value based on chunk (we have to send 1/chunk_left elements)
@@ -24,7 +24,7 @@
 		algo with 3 elements (put the biggest down, then swap)
 	<--
 	push all back to A in order using the fastest way
- */
+*/
 
 int	choose_number_of_chunks(t_stacks_a_b *stacks)
 {
@@ -42,11 +42,13 @@ int	choose_number_of_chunks(t_stacks_a_b *stacks)
 		return (13);
 }
 
+/*
+	find_pivot_value :
+	find the number that has 1 / nbr_chunks * list_size number lower than it
+*/
+
 int	find_pivot_value(int number_of_chunks, t_nbr_list *list)
 {
-/* 
-	find the number that has 1 / nbr_chunks * list_size number lower than him
- */
 	int			pivot;
 	int			i;
 	int			list_size;
@@ -98,13 +100,13 @@ void	send_nbr_to_b(int size_a, int index_nbr, t_stacks_a_b *stacks)
 	pb(stacks);
 }
 
-
-void	choose_nbr_to_send_to_b(int pivot_value, int size_a, t_stacks_a_b *stacks)
-{
-/* 
+/*
+	choose_nbr_to_send :
 	browse all stack a and compare indexes, find the one closer
-	rename this function as choose_nbr_to_send
- */
+*/
+
+void	choose_nbr_to_send(int pivot_value, int size_a, t_stacks_a_b *stacks)
+{
 	int	index;
 	int	index_nbr_to_send;
 	t_nbr_list	*ptr;
@@ -144,23 +146,18 @@ int	list_contains_something_less_or_equal_than_pivot(int pivot, t_nbr_list *lst)
 
 void	send_nbrs_under_pivot_value_to_b(int pivot_value, t_stacks_a_b *stacks)
 {
-/* 
-	while list contain something <= pivot number, call choose nbr
- */
-
 	int	size_a;
 
-	while (list_contains_something_less_or_equal_than_pivot(pivot_value, stacks->a))
+	while (list_contains_something_less_or_equal_than_pivot(pivot_value,
+		stacks->a))
 	{
 		size_a = ft_lstsize(stacks->a);
-		choose_nbr_to_send_to_b(pivot_value, size_a, stacks);
+		choose_nbr_to_send(pivot_value, size_a, stacks);
 	}
 }
 
-int	find_fourth_biggest_nbr_in_list(t_nbr_list *list)
-{ // get size as a param
-	int			i;
-	int			list_size;
+int	find_fourth_biggest_nbr_in_list(t_nbr_list *list, int list_size, int i)
+{
 	int			fourth_biggest;
 	t_nbr_list	*ptr1;
 	t_nbr_list	*ptr2;
@@ -178,8 +175,7 @@ int	find_fourth_biggest_nbr_in_list(t_nbr_list *list)
 		ptr2 = list;
 		while (ptr2)
 		{
-			if (ptr1->nbr > ptr2->nbr)
-				i++;
+			(void)(ptr1->nbr > ptr2->nbr && ++i);
 			ptr2 = ptr2->next;
 		}
 		if (i == list_size - 4)
@@ -189,21 +185,18 @@ int	find_fourth_biggest_nbr_in_list(t_nbr_list *list)
 	return (fourth_biggest);
 }
 
-
 void	send_all_to_b_except_3_biggest(t_stacks_a_b *stacks)
 {
-/* 
-	find the 3rd biggest nbr, set it as pivot, and call send_nbr_under_pivot_value_to_b
- */
 	int	fourth_biggest_nbr;
 	int	size_a;
 
 	size_a = ft_lstsize(stacks->a);
-	fourth_biggest_nbr = find_fourth_biggest_nbr_in_list(stacks->a);
-	while (list_contains_something_less_or_equal_than_pivot(fourth_biggest_nbr, stacks->a))
+	fourth_biggest_nbr = find_fourth_biggest_nbr_in_list(stacks->a, size_a, 0);
+	while (list_contains_something_less_or_equal_than_pivot(fourth_biggest_nbr,
+		stacks->a))
 	{
 		size_a = ft_lstsize(stacks->a);
-		choose_nbr_to_send_to_b(fourth_biggest_nbr, size_a, stacks);
+		choose_nbr_to_send(fourth_biggest_nbr, size_a, stacks);
 	}
 }
 
@@ -261,6 +254,30 @@ void	sort_a_2_or_3_elements(t_stacks_a_b *stacks)
 	}
 }
 
+void	send_nbr_to_a_with_regular_rotate(t_stacks_a_b *stacks, int index_nbr)
+{
+	while (index_nbr)
+	{
+		write(1, "rb\n", 3);
+		rb(stacks);
+		index_nbr--;
+	}
+	write(1, "pa\n", 3);
+	pa(stacks);
+}
+
+void	send_nbr_to_a_with_inverse_rotate(t_stacks_a_b *stacks, int index_nbr)
+{
+	while (index_nbr)
+	{
+		write(1, "rrb\n", 4);
+		rrb(stacks);
+		index_nbr--;
+	}
+	write(1, "pa\n", 3);
+	pa(stacks);
+}
+
 void	send_back_to_a_in_order(t_stacks_a_b *stacks)
 {
 	int	index_biggest_nbr;
@@ -277,27 +294,9 @@ void	send_back_to_a_in_order(t_stacks_a_b *stacks)
 			continue ;
 		}
 		if (index_biggest_nbr <= size_b / 2)
-		{
-			while (index_biggest_nbr)
-			{
-				write(1, "rb\n", 3);
-				rb(stacks);
-				index_biggest_nbr--;
-			}
-			write(1, "pa\n", 3);
-			pa(stacks);
-		}
+			send_nbr_to_a_with_regular_rotate(stacks, index_biggest_nbr);
 		else
-		{
-			while (size_b - index_biggest_nbr)
-			{
-				write(1, "rrb\n", 4);
-				rrb(stacks);
-				index_biggest_nbr++;
-			}
-			write(1, "pa\n", 3);
-			pa(stacks);
-		}
+			send_nbr_to_a_with_inverse_rotate(stacks, size_b - index_biggest_nbr);
 	}
 }
 

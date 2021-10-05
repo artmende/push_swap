@@ -6,7 +6,7 @@
 /*   By: artmende <artmende@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 13:43:56 by artmende          #+#    #+#             */
-/*   Updated: 2021/10/02 10:34:32 by artmende         ###   ########.fr       */
+/*   Updated: 2021/10/05 10:25:14 by artmende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ra(t_stacks_a_b *stacks)
 	temp1 = stacks->a->next;
 	temp2 = temp1;
 	while (temp2->next)
-		temp2 = temp2->next; // temp2 is now the last element
+		temp2 = temp2->next;
 	temp2->next = stacks->a;
 	stacks->a->next = 0;
 	stacks->a = temp1;
