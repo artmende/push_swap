@@ -6,7 +6,7 @@
 /*   By: artmende <artmende@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 15:15:09 by artmende          #+#    #+#             */
-/*   Updated: 2021/09/21 15:36:40 by artmende         ###   ########.fr       */
+/*   Updated: 2021/10/05 16:39:47 by artmende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,14 @@ void	create_nbr_list_from_str(char *str, t_malloc_stuff *data)
 void	check_number_from_str(char *str)
 {
 	int	i;
+	int	detect_nbr;
 
 	i = 0;
+	detect_nbr = 0;
 	while (str[i])
 	{
+		if (str[i] && ft_strchr("0123456789", str[i]))
+			detect_nbr++;
 		if (!ft_strchr("0123456789- ", str[i])
 			|| (str[i] == '-' && i > 0 && str[i - 1] != ' ')
 			|| (str[i] == '-' && !str[i + 1])
@@ -64,4 +68,6 @@ void	check_number_from_str(char *str)
 			call_exit(0, 0, 0);
 		i++;
 	}
+	if (!detect_nbr)
+		call_exit(0, 0, 0);
 }
