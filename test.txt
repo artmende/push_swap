@@ -1,0 +1,22 @@
+
+./checker/main.c \
+
+./checker/verify_and_store_nbrs.c \
+
+./checker/create_nbr_list_from_args.c \
+./checker/create_nbr_list_from_str.c \
+
+./checker/linked_list_add_back_and_free.c \
+
+./checker/run_actions.c \
+./checker/actions_ra_rb_rr.c \
+./checker/actions_rra_rrb_rrr.c \
+./checker/actions_sa_sb_ss_pa_pb.c \
+
+./checker/get_next_line/get_next_line.c \
+./checker/get_next_line/get_next_line_utils.c \
+
+./checker/mix_libft/ft_atoi.c \
+./checker/mix_libft/ft_memset.c \
+./checker/mix_libft/ft_strchr.c \
+./checker/mix_libft/ft_strnstr.c \
