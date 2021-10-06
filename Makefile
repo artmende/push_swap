@@ -6,7 +6,7 @@
 #    By: artmende <artmende@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/05 15:42:45 by artmende          #+#    #+#              #
-#    Updated: 2021/10/05 16:12:49 by artmende         ###   ########.fr        #
+#    Updated: 2021/10/06 11:15:30 by artmende         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,3 +75,5 @@ fclean: clean
 	$(RM) $(NAME_CHECKER)
 
 re: fclean all
+
+.PHONY: clean fclean re all bonus
