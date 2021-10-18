@@ -6,7 +6,7 @@
 /*   By: artmende <artmende@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 14:36:10 by artmende          #+#    #+#             */
-/*   Updated: 2021/10/06 11:31:37 by artmende         ###   ########.fr       */
+/*   Updated: 2021/10/18 11:09:23 by artmende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,23 +37,22 @@ void	choose_nbr_to_send(int pivot_value, int size_a, t_stacks_a_b *stacks)
 
 	index = 0;
 	ptr = stacks->a;
-	while (ptr && index < size_a && ++index)
+	while (ptr && index < size_a)
 	{
 		if (ptr->nbr <= pivot_value)
 		{
-			index_nbr_to_send = index - 1;
+			index_nbr_to_send = index;
 			break ;
 		}
-		ptr = ptr->next;
+		(void)(++index && (ptr = ptr->next));
 	}
-	while (ptr && index < size_a / 2 && ++index)
-		ptr = ptr->next;
+	while (ptr && index < size_a / 2)
+		(void)(++index && (ptr = ptr->next));
 	while (ptr)
 	{
 		if (ptr->nbr <= pivot_value && index_nbr_to_send > size_a - index)
 			index_nbr_to_send = index;
-		index++;
-		ptr = ptr->next;
+		(void)(++index && (ptr = ptr->next));
 	}
 	send_nbr_to_b(size_a, index_nbr_to_send, stacks);
 }

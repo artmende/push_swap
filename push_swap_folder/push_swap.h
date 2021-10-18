@@ -6,7 +6,7 @@
 /*   By: artmende <artmende@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 11:57:58 by artmende          #+#    #+#             */
-/*   Updated: 2021/10/05 15:41:57 by artmende         ###   ########.fr       */
+/*   Updated: 2021/10/18 11:08:44 by artmende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,5 @@ int		pb(t_stacks_a_b *stacks);
 int		ft_atoi(const char *str, t_nbr_list **nbr_list);
 char	*ft_strchr(const char *s, int c);
 void	*ft_memset(void *s, int c, size_t n);
-char	*ft_strnstr(char *str, char *to_find, size_t len);
 
 #endif

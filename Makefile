@@ -6,7 +6,7 @@
 #    By: artmende <artmende@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/05 15:42:45 by artmende          #+#    #+#              #
-#    Updated: 2021/10/06 11:15:30 by artmende         ###   ########.fr        #
+#    Updated: 2021/10/18 11:08:21 by artmende         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,6 @@ SRCS_PUSH_SWAP =	./push_swap_folder/main.c \
 					./push_swap_folder/mix_libft/ft_atoi.c \
 					./push_swap_folder/mix_libft/ft_memset.c \
 					./push_swap_folder/mix_libft/ft_strchr.c \
-					./push_swap_folder/mix_libft/ft_strnstr.c \
 
 SRCS_CHECKER =	./checker_folder/main.c \
 				./checker_folder/verify_and_store_nbrs.c \
